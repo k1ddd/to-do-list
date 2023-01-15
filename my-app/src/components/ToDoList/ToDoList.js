@@ -1,41 +1,42 @@
-import React from "react";
-import "./toDoList.css";
-import "../Main/main.css";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faTrash, faLock, faUnlock } from "@fortawesome/free-solid-svg-icons";
-function ToDoList({ toDo, setToDo }) {
-  function deleteToDo(id) {
-    let newtoDo = [...toDo].filter((item) => item.id !== id);
-    setToDo(newtoDo);
+import React from 'react';
+import './toDoList.css';
+import '../TodoForm/TodoForm.css';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faTrash, faLock, faUnlock } from '@fortawesome/free-solid-svg-icons';
+
+import { useSelector } from 'react-redux';
+import { useDispatch } from 'react-redux';
+import { deleteTodo, changeStatusTodo } from '../../redux/todoSlice';
+
+function ToDoList() {
+  const dispatch = useDispatch();
+  const todos = useSelector((state) => state.todos);
+
+  function handleDelete(id) {
+    dispatch(deleteTodo(id));
   }
 
-  function statusToDo(id) {
-    let newtoDo = [...toDo].filter((item) => {
-      if (item.id === id) {
-        item.status = !item.status;
-      }
-      return item;
-    });
-    setToDo(newtoDo);
+  function handleStatus(id) {
+    dispatch(changeStatusTodo(id));
   }
 
   return (
     <div className="main__div">
-      {toDo.map((item) => (
+      {todos.map((item) => (
         <div id="tasks" key={item.id}>
           <div className="new__task__to__do">
-            <div id="width" className={!item.status ? "close" : ""}>
+            <div id="width" className={!item.status ? 'close' : ''}>
               {item.title}
             </div>
             <div>
-              <button className="btn" onClick={() => statusToDo(item.id)}>
+              <button className="btn" onClick={() => handleStatus(item.id)}>
                 {item.status ? (
                   <FontAwesomeIcon icon={faLock} />
                 ) : (
                   <FontAwesomeIcon icon={faUnlock} />
                 )}
               </button>
-              <button className="btn" onClick={() => deleteToDo(item.id)}>
+              <button className="btn" onClick={() => handleDelete(item.id)}>
                 <FontAwesomeIcon icon={faTrash} />
               </button>
             </div>
