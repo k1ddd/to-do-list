@@ -1,0 +1,18 @@
+.main__div {
+  overflow-y: scroll;
+  margin-left: 15px;
+}
+.close {
+  color: orange;    
+  text-decoration: line-through;
+}
+.new__task__to__do {
+  align-items: center;
+  display: flex;
+  text-align: center;
+  justify-content: space-between;
+}
+
+#width {
+  max-width: 680px;
+}
